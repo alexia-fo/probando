@@ -1,0 +1,9 @@
+https://www.set.gov.py/portal/PARAGUAY-SET/detail?folder-id=repository:collaboration:/sites/PARAGUAY-SET/categories/SET/biblioteca-virtual/preguntas-frecuentes/timbrado&content-id=/repository/collaboration/sites/PARAGUAY-SET/documents/biblioteca/biblioteca-virtual/Timbrado_de_Documentos
+
+
+
+MYSQL POR COMANDOS
+https://desarrolloweb.com/articulos/2408.php#:~:text=Comando%20para%20conectar%20con%20el%20servidor%20MySQL&text=Desde%20la%20consola%20invocamos%20a,indicarle%20unas%20opciones%20de%20conexi%C3%B3n.&text=Nota%3A%20Con%20el%20%22%25%22,de%20la%20l%C3%ADnea%20de%20comandos.
+https://www.discoduroderoer.es/como-conectar-mysql-desde-la-consola-en-windows/
+
+https://www.google.com/search?q=importar+txt+en+mysql&rlz=1C1CHZN_esPY1000PY1000&ei=qfxoY4TVHdPf1sQPypORqA8&oq=importar+txt+en+my&gs_lcp=Cgxnd3Mtd2l6LXNlcnAQAxgAMgYIABAWEB46CwgAEIAEELEDEIMBOggIABCABBCxAzoOCC4QgAQQsQMQxwEQ0QM6BQgAEIAEOg4ILhCABBCxAxCDARDUAjoFCAAQsQM6DgguEIAEELEDEMcBEK8BOgsILhCxAxCDARDUAjoLCC4QgAQQxwEQrwE6CAgAELEDEIMBOggIABAWEB4QCkoECE0YAUoECEEYAEoECEYYAFAAWNmIAWCplQFoAHABeACAAcABiAG-EpIBBDAuMTiYAQCgAQHAAQE&sclient=gws-wiz-serp#fpstate=ive&vld=cid:12f70cc2,vid:ADDGLd623-Q

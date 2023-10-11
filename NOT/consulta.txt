@@ -1,0 +1,9 @@
+SELECT vd.CodArticulo, vd.Cantidad, SUBSTRING(Nombre, 1, 30
+) as Nombre, vd.PrecioUnitario, (vd.Cantidad*vd.PrecioUnitario) AS subtotal, vd.Descuento, 
+FORMAT(IF(vd.Exenta>0,ROUND(vd.Exenta),0),0,'de_DE') Exenta,
+FORMAT(IF(vd.Gravada5>0,ROUND(vd.Gravada5),0),0,'de_DE') Gravada5,
+FORMAT(IF(vd.Gravada10>0, ROUND(vd.Gravada10),0),0,'de_DE') Gravada10
+FROM ventadet vd 
+JOIN articulo a ON vd.CodArticulo=a.CodArticulo
+JOIN impuesto i ON a.codImpuesto=i.codImpuesto
+WHERE vd.codVenta=$P{parametro1}

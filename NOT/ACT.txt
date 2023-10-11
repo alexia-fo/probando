@@ -1,0 +1,123 @@
+////////////////////FRMVENTAS//////////////
+
+
+
+/* Cambios a 
+   0- agregar campos a la consulta de cboComprobante " DATE_FORMAT(dpc.inicioValidez,'%d-%m-%Y' "
+    -agegar seters en: obtenerNumeroComprobante()
+    para agregar fecha de validez en el ticketF.
+ * 1- Crear la variable global OrdenPizza y preparado (para imprimir en cocina cuando es compra a credito)
+ * 2- agregar el metodo numeroTurno() para obtener el orden de la pizza (para imprimir en cocina cuando es compra a credito)
+ * 3- cuando se realiza una venta a credito imprimir igual  el ticket en cocina
+ * ya que por ahora solo se imprime cuando es una venta contado
+ */
+
+/*
+    Cambios a 
+    4. Cuando se van a reimprimir comprobantes de compras  en efectivo  los montos no  se obtienen en FrmVentas,
+    crear variables para los montos para luego settear las variables de frmCobroFactura  con los mismos
+    5. Cuando  ya existen productos en la  grilla  se deshabilita la opcion de cambiar cliente, y nuevo cliente(pq tambien establece el ci en el campo)
+    ya que cada cliente tiene su lista de precios , tambien se deshabilita el tipo de comprobante pq la  factura solo  debe tener
+    20 ITEMS  y en el ticket es indefinido (a13)
+    6. cuando se quitan items de la grilla verificar si ya no existen filas, habilitar la opcion de cambiar cliente, nuevo  cliente y cambiar comprobante si ya no existen
+    7. se settean los montos del comprobante contado de frmCobroFactura con las variables creadas en a4, para reimprimirlo.
+    - se settea la fecha de venta del comprobante contado de frmCobroFactura con la variable "fechad" ya  existente en FrmVentas (si se usa la fecha de bd en el ticketF [igual q el comprobante interno],
+	 cambia  la fecha de venta al reimprimir el ticketF).
+    - se settea el codigo de venta del comprobante contado de frmCombroFactura con la variable codVenta ya existente en FrmVentas, el codVenta se utilizara para enviarle compo parametro al jasperreport de factura
+	cuando el comprobante es factura y no ticket.
+    8. No imprimir el ticket de cocina cuando es una reimpresion de comprobantes y facturas
+	Evaluar a que tipo de comprobante legal corresponde para reimprimirlo 
+    9. cambiar la consulta sql estableciendo el  tipo de comprobante  en  forma dinamica porque ahora tambien existen facturas y no solo tickets  que se puden reimprimir
+    	-Obtener la fecha de venta, codigo de venta y establecerlos a las variables Fechad y codVent para reimprimir, ya que son utilizadas tambien al registrar la venta. La funcion de ticketF
+         utilizara la misma variable al imprimir y reimprimir (si se usa la fecha de bd en el ticketF [igual q el comprobante interno],
+	 cambia  la fecha de venta al reimprimir el ticketF).
+   	-Si es una venta contado se obtiene el Vuelto, el pagado y el codIngreso de cajaformacobro, pq se  realiza un leftjoin en la consulta anterior
+    10. Cuando la factura a reimprimir es factura contado se obtiene el codigo  de ingreso de  los comprobantes  para luego.
+    obtener el monto en efectivo, tarjeta y cheque mediante una cosulta a la tabla cajaformadecobrodet
+     11. No se calculaba el descuento en calcularSubtotal(), esto hace que al reimprimir el descuento sea 0 y el subtotal sea incorrecto.
+    12. al calcular los  totales en calcularTotal() al agregar o quitar productos: el subtotal y el descuento son incorrectos ya que
+   el descuento total es igual a la suma de los descuentos de la grilla lo cual no tiene en cuenta la cantidad de productos(descuento unitario),
+   y el subtotal deberia ser el descuento total + la suma a pagar, es incorrecto pq tambien usa el descuento total calculado.
+*/
+
+/*
+    Cambios a 
+    12. una vez que el campo de ci pierde el foco  y la opcion ruc esta chequeado se verifica si el ruc se encuentra registrado en la set
+    mediante la tabla "ruc" de la bd que contiene todos los rucs descargados de la set
+    13. Nuevo Cliente. verificar cuando el se tipea el ruc del cliente para validar que contenga 6 digitos
+    14. Nuevo Cliente. cuando se checkea la opcion de ruc se verifica si el ruc se encuentra registrado en la set
+    mediante la tabla "ruc" que contiene todos los rucs descargados de la set
+    -se modifico la calase cCliente ya que al insertar un nuevo cliente no guarda el digito verificador , solo
+  (por ahora no se verifica si el ruc esta  activo, cancelado, en suspension temporal, ya que
+  eso no se valida en la pagina de la set.
+  Se puede registrar clientes que  no estan registrados en la tabla ruc,ya que la misma solo se usa
+  para  obtener el nombre, se puede registrar sin el celular).
+    agrega el  ci
+    15. al agregar un articulo se verifica la longitud de la grilla de productos
+    si hay productos añadidos en la grilla se deshabilita a opcion de cambiar comprobante
+    ya que la factura imprime solo 20 items, se deshabilita la opcion de cabiar un cliente
+    y de guardar un nuevo cliente.
+    Ademas si el comprobante es factura y se ha agregado 20 items en la grilla ya no se agregara el producto
+    16. al registrar la venta imprimir factura o ticket segun el comprobante seleccionado 1:ticket 5:factura
+*/
+
+
+
+////////FRMCOBROFACTURA///////////
+/***********************
+-cambio a
+* 1.crear una clase para manipular el fondo de caja(en efectivo), llamado cFondo 
+* 2.Al reimprimir un ticket en efectivo algunos datos  no  son cargados  (totalpago,vuelto,tarjeta, cheque, efectico)
+* crear metodos setter y getter para establecer y obtener montos para  reimprimir el ticket contado
+* 3.Impedir que se agreguen formas de pago de tipo cheque con monto superior al monto restante a pagar
+* 4.Al realizar pagos  en efectivo se  realiza un movimiento de fondode caja mediante la clase fondo creado en a1
+* 5.Si  se selecciona el comprobante de tipo ticke se imprimira el ticket,  si  se selecciona un comprobante  de tipo
+* factura se imprimira una factura, ambos junto  con  el comprobante interno  y el ticket de cocina
+* 6.Crear  un metodo para generar factura en pdf imprimirFacturaContado();
+17. Al registrar la venta es una venta credito el gravada5 y gravada10 corresponde a gravadas en la tabla "ventadetalle",
+pero cuando es una  venta credito corresponse a iva's por los que al reimprimir los datos son incorrectos.
+-Cuando la venta es contado se utiliza la clase cVenta para registra la venta, en el se settean  los datos como IVA's y sinIVA's,
+la clase al insertar utilizaba getIVA5 y getIVA10 para  las  "gravadas", para guardar correctamente
+lo modificamos sumando el "iva"+"sinIva" al insertar.
+*********************/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+*/

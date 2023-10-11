@@ -1,0 +1,42 @@
+-------------- PARA IMPLEMENTAR EL SISTEMA -----------------
+
+1. AGREGAR PERMISOS --SISTEMA BANCO
+
+	(combo permisos)
+	602: Banco(Datos Bancarios)
+	601: Cheques(emision de cheques)
+	600: Movimientos Banco (Movimiento Banco)
+
+2. CREAR BANCO --SISTEMA BANCO
+3. CREAR CUENTA DE BANCO --SISTEMA BANCO
+4. CREAR CHEQUERA BANCO --SISTEMA BANCO
+5. EMITIR CHEQUE. EN EL CASO DE QUE SE EMITAN CHEQUES INDEPENDIENTES A COMPRAS REALIZADAS (NO PARA PAGAR COMPRAS) --SISTEMA BANCO
+6. GENERAR MOVIMIENTOS DE BANCO (CUALQUIER MOVIMIENTO DE FONDO QUE NO SEA EMISION DE CHEQUES) --SISTEMA BANCO
+
+7. CARGAR FACTURAS DE COMPRAS (RECEPCION O GASTO) --SISTEMA PROVEEDORES 
+8. GENERAR ORDENES DE PAGO. EN EL CASO DE QUE SE PAGUEN LAS COMPRAS CON CHEQUES, SE EMITEN LOS CHEQUES AUTOMATICAMENTE.--SISTEMA PROVEEDORES
+		para cargar ordenes de pago asignar el permiso para generar ordenes de pago a la pc (COMPUTERNAME AND codComprobante =3)
+
+
+
+------------ FUNCIONAMIENTO DEL SISTEMA ------------
+
+1. Al generar una orden de pago, cuyo pago se realiza con cheques inserta un registro en la tabla "chequeemitido"
+2. Luego se actualiza el "saldoComprometido" de la cuenta bancaria al cual pertenece la chequera con la cual se emitió el cheque
+3. Se actualiza el nro "ultimocheque" emitido de la chequera
+4. Si se concilia un cheque
+	4.1 se actualiza la fecha "conciliacion" del cheque
+	4.2 se actualiza el "saldoReal" de la cuenta de la chequera con la que se generó el cheque
+	4.3 se inserta registro en "movimientobanco"
+
+
+
+
+
+
+CONSULTAS
+SELECT* FROM comprascab WHERE SaldoFactura=0;
+
+UPDATE comprascab SET SaldoFactura=0;
+ 
+

@@ -1,0 +1,188 @@
+Microsoft Windows [Versión 10.0.19045.2251]
+(c) Microsoft Corporation. Todos los derechos reservados.
+
+C:\Windows\system32>cd..
+
+C:\Windows>cd..
+
+C:\>cd Program Files
+
+C:\Program Files>cd MySQL
+
+C:\Program Files\MySQL>dir
+ El volumen de la unidad C no tiene etiqueta.
+ El número de serie del volumen es: 9C6A-1257
+
+ Directorio de C:\Program Files\MySQL
+
+29/06/2022  12:50    <DIR>          .
+29/06/2022  12:50    <DIR>          ..
+06/06/2022  11:44    <DIR>          MySQL Server 5.7
+08/11/2022  07:16    <DIR>          MySQL Workbench 8.0 CE
+               0 archivos              0 bytes
+               4 dirs  416.998.170.624 bytes libres
+
+C:\Program Files\MySQL>cd MySQL Server 5.7
+
+C:\Program Files\MySQL\MySQL Server 5.7>cd bin
+
+C:\Program Files\MySQL\MySQL Server 5.7\bin>mysql -h 192
+ERROR 2005 (HY000): Unknown MySQL server host '192' (0)
+
+C:\Program Files\MySQL\MySQL Server 5.7\bin>mysql -h 192.168.1.200 -u root -p
+Enter password: *****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 592
+Server version: 5.7.15-log MySQL Community Server (GPL)
+
+Copyright (c) 2000, 2016, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use bdysapy;
+Database changed
+mysql> show tables;
++--------------------+
+| Tables_in_bdysapy  |
++--------------------+
+| articulo           |
+| articulodeposito   |
+| articulolista      |
+| au_articulo        |
+| banco              |
+| barrio             |
+| billetes           |
+| caja               |
+| cajaaperturacierre |
+| cajachequerecibido |
+| cajaformacobro     |
+| cajaformacobrodet  |
+| cajanotacredito    |
+| cajarendicion      |
+| cajasaldo          |
+| cajatarjetas       |
+| cajero             |
+| cantidad_billete   |
+| cargo              |
+| cdetpc             |
+| cempresa           |
+| centrocosto        |
+| chequeemitido      |
+| chequerabanco      |
+| ciudad             |
+| clasificacion      |
+| cliente            |
+| cobrador           |
+| comprascab         |
+| comprasdet         |
+| comprobante        |
+| condicionpago      |
+| cpc                |
+| csucursal          |
+| cuentabanco        |
+| cuentas            |
+| departamento       |
+| deposito           |
+| familia            |
+| funcionario        |
+| impuesto           |
+| kit                |
+| linea              |
+| listaprecio        |
+| marca              |
+| mesascab           |
+| mesasdet           |
+| movbancoc          |
+| movcab             |
+| movdet             |
+| movimientobanco    |
+| movimientofondo    |
+| nacionalidad       |
+| ordenpago          |
+| ordenpagodetalle   |
+| parametro          |
+| ppantalla          |
+| ppermiso           |
+| produccioncab      |
+| producciondet      |
+| proveedor          |
+| pusuario           |
+| recibocab          |
+| recibodet          |
+| ruc                |
+| rutas              |
+| sgenerar           |
+| sliquidacionsueldo |
+| smovimientos       |
+| stipo              |
+| sucursal           |
+| timbrado           |
+| tipo_cliente       |
+| tipo_cuenta        |
+| tipo_formapago     |
+| tipo_proveedor     |
+| tipoformacobro     |
+| tipomov            |
+| tipomovbanco       |
+| tipotarjeta        |
+| transporte         |
+| turno              |
+| unidad             |
+| valores            |
+| vendedor           |
+| venta              |
+| ventadet           |
+| versiones          |
+| zona               |
++--------------------+
+89 rows in set (0.13 sec)
+
+mysql> LOAD DATA LOCAL INFILE "D:/Sistemas/RUCS SET/ruc0.csv" INTO TABLE ruc FIELDS TERMINATED BY ';' LINES TERMINATED BY  '\n';
+Query OK, 170829 rows affected, 3471 warnings (1.75 sec)
+Records: 170829  Deleted: 0  Skipped: 0  Warnings: 3471
+
+mysql> LOAD DATA LOCAL INFILE "D:/Sistemas/RUCS SET/ruc1.csv" INTO TABLE ruc FIELDS TERMINATED BY ';' LINES TERMINATED BY  '\n';
+Query OK, 171001 rows affected, 65535 warnings (2.17 sec)
+Records: 171001  Deleted: 0  Skipped: 0  Warnings: 167552
+
+mysql> LOAD DATA LOCAL INFILE "D:/Sistemas/RUCS SET/ruc2.csv" INTO TABLE ruc FIELDS TERMINATED BY ';' LINES TERMINATED BY  '\n';
+Query OK, 172012 rows affected, 3454 warnings (2.74 sec)
+Records: 172012  Deleted: 0  Skipped: 0  Warnings: 3454
+
+mysql> LOAD DATA LOCAL INFILE "D:/Sistemas/RUCS SET/ruc3.csv" INTO TABLE ruc FIELDS TERMINATED BY ';' LINES TERMINATED BY  '\n';
+Query OK, 171741 rows affected, 65535 warnings (3.55 sec)
+Records: 171741  Deleted: 0  Skipped: 0  Warnings: 168224
+
+mysql> LOAD DATA LOCAL INFILE "D:/Sistemas/RUCS SET/ruc4.csv" INTO TABLE ruc FIELDS TERMINATED BY ';' LINES TERMINATED BY  '\n';
+Query OK, 171374 rows affected, 3488 warnings (3.53 sec)
+Records: 171374  Deleted: 0  Skipped: 0  Warnings: 3488
+
+mysql> LOAD DATA LOCAL INFILE "D:/Sistemas/RUCS SET/ruc5.csv" INTO TABLE ruc FIELDS TERMINATED BY ';' LINES TERMINATED BY  '\n';
+Query OK, 171053 rows affected, 3415 warnings (4.03 sec)
+Records: 171053  Deleted: 0  Skipped: 0  Warnings: 3415
+
+mysql> LOAD DATA LOCAL INFILE "D:/Sistemas/RUCS SET/ruc6.csv" INTO TABLE ruc FIELDS TERMINATED BY ';' LINES TERMINATED BY  '\n';
+ERROR 2 (HY000): File 'D:\Sistemas\RUCS SET\ruc6.csv' not found (Errcode: 2 - No such file or directory)
+mysql> LOAD DATA LOCAL INFILE "D:/Sistemas/RUCS SET/ruc6.csv" INTO TABLE ruc FIELDS TERMINATED BY ';' LINES TERMINATED BY  '\n';
+ERROR 2 (HY000): File 'D:\Sistemas\RUCS SET\ruc6.csv' not found (Errcode: 2 - No such file or directory)
+mysql> LOAD DATA LOCAL INFILE "D:/Sistemas/RUCS SET/ruc7.csv" INTO TABLE ruc FIELDS TERMINATED BY ';' LINES TERMINATED BY  '\n';
+Query OK, 170794 rows affected, 65535 warnings (4.98 sec)
+Records: 170794  Deleted: 0  Skipped: 0  Warnings: 167251
+
+mysql> LOAD DATA LOCAL INFILE "D:/Sistemas/RUCS SET/ruc8.csv" INTO TABLE ruc FIELDS TERMINATED BY ';' LINES TERMINATED BY  '\n';
+Query OK, 170794 rows affected, 65535 warnings (4.90 sec)
+Records: 170794  Deleted: 0  Skipped: 0  Warnings: 167243
+
+mysql> LOAD DATA LOCAL INFILE "D:/Sistemas/RUCS SET/ruc9.csv" INTO TABLE ruc FIELDS TERMINATED BY ';' LINES TERMINATED BY  '\n';
+Query OK, 171172 rows affected, 65535 warnings (5.96 sec)
+Records: 171172  Deleted: 0  Skipped: 0  Warnings: 167574
+
+mysql> LOAD DATA LOCAL INFILE "D:/Sistemas/RUCS SET/ruc6.csv" INTO TABLE ruc FIELDS TERMINATED BY ';' LINES TERMINATED BY  '\n';
+Query OK, 171192 rows affected, 65535 warnings (5.32 sec)
+Records: 171192  Deleted: 0  Skipped: 0  Warnings: 167597
+
+mysql>

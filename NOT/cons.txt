@@ -1,0 +1,35 @@
+
+/*
+CAMPOS
+*/
+"ID","COD.INTERNO","ITEM","CÓDIGO BARRA", "DESCRIPCIÓN ARTICULO","CANTIDAD","UNI.",
+                        "IVA","PREC.UNIT.GS", "PrecioSuma", "SUBTOTAL.GS", "EXENTA","GRAV.5","GRAV.10","Tipo","COSTO",
+                        "COSTOPP","P.NETO","DESCTO.","IVA5","IVA10","PROMOCION","subtotalcosto","siniva5","siniva10",
+                        "cocina", "Obs"
+
+
+
+/*
+REIMPRIMIR CONTADO
+(vd.Gravada10+sin_iva10)
+*/
+SELECT c.Ruc,c.Nombre,v.fechaVenta,v.TipoFactura,vd.CodArticulo, a.CodInterno, a.CodBarra,a.Nombre, vd.Cantidad,a.codImpuesto,v.Total,
+v.descuento,v.iva5,v.iva10,v.exenta,v.tot_iva,vd.PrecioUnitario,(vd.Cantidad * vd.PrecioUnitario) AS Subtotal, vd.Exenta, (vd.Gravada5+sin_iva5),
+(vd.Gravada10+sin_iva10),vd.Descuento, a.Promocion,v.NroFactura, u.NombreUnidad,vd.sin_iva5,vd.sin_iva10, a.cocina, v.obs, fc.Vuelto, 
+(fc.importe+fc.Vuelto) AS Pago, fc.codIngreso FROM  venta v JOIN ventadet vd ON v.CodVenta=vd.CodVenta JOIN articulo a 
+ON vd.CodArticulo=a.CodArticulo JOIN cliente c ON v.CodCliente=c.CodCliente JOIN unidad u ON u.CodUnidad=a.CodUnidad  
+LEFT JOIN cajaformacobro fc ON fc.CodVenta=v.CodVenta WHERE  v.estado <> '1' AND V.NroSerie='001-012' AND v.NroFactura='0000077' AND v.codComprobante=1
+
+
+
+/*
+REIMPRIMIR CREDITO
+(vd.Gravada10)
+*/
+SELECT c.Ruc,c.Nombre,v.fechaVenta,v.TipoFactura,vd.CodArticulo, a.CodInterno, a.CodBarra,a.Nombre, vd.Cantidad,a.codImpuesto,v.Total,
+v.descuento,v.iva5,v.iva10,v.exenta,v.tot_iva,vd.PrecioUnitario,(vd.Cantidad * vd.PrecioUnitario) AS Subtotal, vd.Exenta, (vd.Gravada5),
+(vd.Gravada10),vd.Descuento, a.Promocion,v.NroFactura, u.NombreUnidad,vd.sin_iva5,vd.sin_iva10, a.cocina, v.obs, fc.Vuelto, 
+(fc.importe+fc.Vuelto) AS Pago, fc.codIngreso FROM  venta v JOIN ventadet vd ON v.CodVenta=vd.CodVenta JOIN articulo a 
+ON vd.CodArticulo=a.CodArticulo JOIN cliente c ON v.CodCliente=c.CodCliente JOIN unidad u ON u.CodUnidad=a.CodUnidad  
+LEFT JOIN cajaformacobro fc ON fc.CodVenta=v.CodVenta WHERE  v.estado <> '1' AND V.NroSerie='001-012' AND v.NroFactura='0000082' 
+AND v.codComprobante=1

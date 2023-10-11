@@ -1,0 +1,40 @@
+SELECT op.NroOrden, op.FechaOrden, p.Nombre, op.MontoTotal 
+FROM ordenPago op JOIN proveedor p ON p.CodProveedor=op.CodProveedor 
+WHERE FechaOrden BETWEEN '2021-02-04' AND '2023-2-04';
+
+SELECT op.FechaOrden, SUM(op.MontoTotal) AS MontoTotal 
+FROM ordenPago op JOIN proveedor p ON p.CodProveedor=op.CodProveedor 
+WHERE FechaOrden BETWEEN '2021-02-04' AND '2023-2-04' GROUP BY op.`FechaOrden`;
+
+
+/*prueba
+
+comprascab - condCompra=4 --> credito  condCompra=1 --> contado 
+*/
+SELECT CONCAT(RUC, "-", dv) Ruc, Nombre,LimiteCredito, SaldoCredito FROM proveedor WHERE SaldoCredito!=0;
+
+
+/*--------------*/
+SELECT c.fechaCompra, p.Nombre, CONCAT(c.NroSerie, "-", NroFactura) AS factura, c.FechaComprobante, c.FechaVencimiento, c.Total, 
+c.SaldoFactura, c.TipoCompra, c.condCompra
+FROM comprascab c JOIN proveedor p 
+ON c.codProveedor=p.CodProveedor
+WHERE c.FechaAnulacion IS NULL AND c.condCompra=4 
+/*---------------*/
+
+/*puedo sumar el total de pagos realizados por proveedor (podria ser la cabOrdenPago en vez del detalle)*/
+SELECT c.fechaCompra, p.Nombre, CONCAT(c.NroSerie, "-", NroFactura) AS factura, c.FechaComprobante, c.FechaVencimiento, c.Total, 
+c.SaldoFactura, c.TipoCompra, c.condCompra, op.MontoPago
+FROM comprascab c JOIN proveedor p 
+ON c.codProveedor=p.CodProveedor
+JOIN ordenpagodetalle op
+ON op.codCompra=c.CodCompra
+WHERE c.FechaAnulacion IS NULL AND c.condCompra=4 
+
+
+/*deudas por proveedor*/
+SELECT p.codProveedor,p.Nombre, SUM(c.SaldoFactura) AS total
+FROM comprascab c JOIN proveedor p 
+ON c.codProveedor=p.CodProveedor
+WHERE c.FechaAnulacion IS NULL AND c.condCompra=4 AND c.SaldoFactura!=0
+GROUP BY p.CodProveedor

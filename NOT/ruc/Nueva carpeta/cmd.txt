@@ -1,0 +1,9 @@
+mysql -h localhost -u root -p
+
+-->ingresar contraseña
+
+mysql> use bdysapy;
+
+mysql> select*  from cempresa;
+
+mysql> LOAD DATA LOCAL INFILE 'C:/Users/Operador/Documents/ruc/ruc0.csv' INTO TABLE ruc2 FIELDS TERMINATED BY ';' LINES TERMINATED BY '\n';
